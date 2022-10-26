@@ -1,0 +1,79 @@
+@media screen and (max-width:990px) {
+   .navbar-expand .navbar-nav {
+    justify-content: space-between;
+   }
+.ms-auto {
+    margin-left: -50px;
+}
+.nav-link {
+    margin-left: -50px;
+}
+   }
+
+     
+   @media screen and (max-width:969px) 
+   {
+.ms-auto{
+    margin-left: -10px;
+    width: 300px;
+}
+.navbar-brand{
+    margin-left: -80px;
+}
+   }
+   
+   @media screen and (max-width:954px) {
+        .plan-restuarnat
+        {
+            font-size: 1rem;
+        
+        }
+        
+    }
+    @media screen and (max-width:642px) {
+        .zone_button
+        {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        width: 150px;
+        align-items: center;
+        margin-top: 10px;
+        }
+        .plan-restuarnat
+        {
+            margin-top: -20px;
+            margin-left: 220px;
+        }
+    }
+    @media screen and (max-width:550px) {
+        .plan-restuarnat{
+            margin-left: 180px;
+        }
+
+    }
+
+    @media screen and (max-width:476px) {
+        .plan-restuarnat{
+            margin-left: 150px;
+        }
+
+    }
+    @media screen and (max-width:410px) {
+        .plan-restuarnat{
+            margin-left: 110px;
+        }
+
+    }
+    @media screen and (max-width:320px) {
+        .plan-restuarnat{
+            margin-left: 80px;
+        }
+
+    }
+    @media screen and (max-width:350px) {
+        .plan-restuarnat{
+            margin-left: 50px;
+        }
+
+    }

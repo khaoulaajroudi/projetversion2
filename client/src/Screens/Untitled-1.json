@@ -1,0 +1,61 @@
+{
+    "table": "12a",
+    "server": "Admin",
+    "from_kiosk": false,
+    "id": "",
+    "message": "aucune",
+    "customer_name": "",
+    "customer_company": "",
+    "code1": "",
+    "code2": "",
+    "interphone": "",
+    "etage": "",
+    "table_number": 269,
+    "customer_tel": "",
+    "customer_adress": "",
+    "status": "pending",
+    "orderType": "sur place",
+    "paymentType": "Especes",
+    "totalPrice": 5,
+    "taxPrice": 1,
+    "tvas": [
+        {
+            "value": 1,
+            "perc": 20
+        }
+    ],
+    "orderItems": [
+        {
+            "cat_id": 1057,
+            "id": 5638,
+            "name": "tuyau jetable",
+            "price": 5,
+            "is_alcool": true,
+            "image": "https://menupremium.fr/public/photos/article/default/default-product.jpg",
+            "description": "f",
+            "isComp": false,
+            "nsteps": 0,
+            "active": "1",
+            "is_hot": true,
+            "is_cold": false,
+            "code": "CHI2P",
+            "is_supp": false,
+            "supplement": {
+                "sauces": [],
+                "drinks": []
+            },
+            "extras": [],
+            "qt": 1,
+            "stepItems": {},
+            "remise": 0,
+            "offert": false,
+            "new": "false",
+            "tva": 20
+        }
+    ],
+    "date": "2022-10-19",
+    "time": "11:44",
+    "order_id": 7864,
+    "Date": 1666176276103,
+    "nbrCouverts": 1
+}
