@@ -33,8 +33,8 @@ console.log("recapz",recap)
 
   recap.today?.orderItems?.map((item) => {
     if (item.tva==10) {
-      v2=v2+(item.qt);
-      qqt2=(item.qt)
+      v2=v2+(item.quantity);
+      qqt2=(item.quantity)
       vp2=(item.price);
       vs2=+(qqt2*(item.price));
       totalprice2=totalprice2+vs2;
@@ -43,8 +43,8 @@ console.log("recapz",recap)
       console.log("totalprice2",totalprice2)
      }
      else if(item.tva==20){
-      v3=v3+(item.qt);
-      qqt3=(item.qt)
+      v3=v3+(item.quantity);
+      qqt3=(item.quantity)
       vp3=(item.price);
       vs3=+(qqt3*(item.price));
       totalprice3=totalprice3+vs3;
@@ -53,8 +53,8 @@ console.log("recapz",recap)
       console.log("totalprice3",totalprice3)
      }
        else if (item.tva==5.5) {
-        v1=v1+(item.qt);
-      qqt1=(item.qt)
+        v1=v1+(item.quantity);
+      qqt1=(item.quantity)
       vp1=(item.price);
       vs1=+(qqt1*(item.price));
       totalprice1=totalprice1+vs1;

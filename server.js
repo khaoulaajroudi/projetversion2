@@ -381,19 +381,19 @@ app.post("/api/clotureDatafromto", async (req, res) => {
 
   orderItems = [
     ...orderItems
-      .reduce((r, o) => {
-        const key = o.item_id;
-        const item =
-          r.get(key) ||
-          Object.assign({}, o, {
-            quantity: 0,
-            totalPrice: 0,
-          });
-        item.quantity ++;
-        item.totalPrice =+ o.price;
-        return r.set(key, item);
-      }, new Map())
-      .values(),
+      // .reduce((r, o) => {
+      //   const key = o.item_id;
+      //   const item =
+      //     r.get(key) ||
+      //     Object.assign({}, o, {
+      //       quantity: 0,
+      //       totalPrice: 0,
+      //     });
+      //   item.quantity ++;
+      //   item.totalPrice =+ o.price;
+      //   return r.set(key, item);
+      // }, new Map())
+      // .values(),
   ];
   let tvas = _.groupBy(todayOrders, function (b) {
     let tva_perc = b.tva;
