@@ -346,6 +346,7 @@ if(client.type!="sur place")
       taxPrice: newOrder?.tva,
       tvas: (newOrder?.price * newOrder?.tva) / 100,
       orderItems: newOrder?.orderItems,
+      
       date: newOrder?.date,
       time: newOrder?.time,
     };

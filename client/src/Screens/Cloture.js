@@ -74,6 +74,7 @@ const Cloture = () => {
   const initialValue = useSelector((state) => state.caisse.initialValue);
   const products = useSelector((state) => state.data.products);
   const checkoutData = useSelector((state) => state.order.checkoutData);
+  console.log(checkoutData)
   let enCours =
     checkoutData?.filter((e) => e.status == "pending" && e.date == date)
       ?.length || 0;
@@ -82,6 +83,7 @@ const Cloture = () => {
   const completd = orders?.slice()?.sort((a, b) => b.id - a.id).filter((item) => item.paymentsInDb && item.paymentsInDb.length > 0)
   const [finalValue, setFinalValue] = useState(initialValue);
   const [recap, setrecap] = useState({});
+  console.log("recap",recap);
   const [ping, setping] = useState(false);
   const [page, setpage] = useState(1);
   const [data, setdata] = useState({});
@@ -129,25 +131,25 @@ const Cloture = () => {
       let sum = 0;
 
       elementt?.forEach((ticket) => {
-        sum = sum + ticket.price + (ticket.price * ticket.tva) / 100;
+        sum = sum + ticket.price + ((ticket.price * ticket.tva) / 100);
       });
       pay_method.push({ qt: elementt.length, name: key, prix: sum });
     }
   
-   let newTva ={
-    5.5 : 0,
-    10:  0,
-    20 :0
-   }
+  //  let newTva ={
+  //   5.5 : 0,
+  //   10:  0,
+  //   20 :0
+  //  }
   
-   for (const key in recap.today?.tvas) {
-    let E = recap.today?.tvas[key];
-  for( let j in newTva){
-    if(j==key){
-     newTva[j]=E
-    }
-  }
-   }
+  //  for (const key in recap.today?.tvas) {
+  //   let E = recap.today?.tvas[key];
+  // for( let j in newTva){
+  //   if(j==key){
+  //    newTva[j]=E
+  //   }
+  // }
+  //  }
     let PrintData = {
       restaurant: {
         name: recap.Restaurant.name,
@@ -173,7 +175,7 @@ const Cloture = () => {
       ).toFixed(2),
 
       pay_method: pay_method,
-      tva: newTva,
+      sometva: recap.today?.todaytva,
       ht: recap.today?.total.toFixed(2),
       ttc: (recap.today?.total+tvasum).toFixed(2),
       fond_initial: recap.lastOuverture?.montant.toFixed(2),
@@ -402,7 +404,7 @@ useEffect(() => {
       ).toFixed(2),
 
       pay_method: pay_method,
-      tva: newTva,
+      sometva: recap.today?.todaytva,
       ht: recap.today?.total.toFixed(2),
       ttc: (recap.today?.total+tvasum).toFixed(2),
       fond_initial: recap.lastOuverture?.montant.toFixed(2),
@@ -533,7 +535,7 @@ useEffect(() => {
 
             <TicketZ
            
-              tvas={recap.today?.tvas}
+              tvas={recap.today?.todaytva}
               products={recap.today?.orderItems?.map((e) => ({
                 ...e,
                 totalPrice: e.price * e.quantity,
@@ -551,11 +553,11 @@ useEffect(() => {
               height: "100vh",
             }}
           >
-            <div
+            <div className="stats"
               style={{
                 width: "100%",
                 display: "flex",
-                justifyContent: "space-evenly",
+                justifyContent: "space-around",
               }}
             >
               <div className="rec">

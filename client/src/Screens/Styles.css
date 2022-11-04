@@ -479,6 +479,10 @@ thead {
   background-color: #5f27cd !important;
   color: white;
 }
+.tbdtva {
+  background-color: #F08488 !important;
+  color: white;
+}
 
 .tbds {
   background-color: #ffc107 !important;
@@ -1695,13 +1699,11 @@ width: 10rem !important;
   }
   .colture_navbar {
     margin-left: 0 !important;
+  
   }
   .cloture-server {
     position: absolute;
     right: 0;
-  }
-  .colture-table-icon {
-    margin-left: -15rem;
   }
   .rec {
     width: 9rem;

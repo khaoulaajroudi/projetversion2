@@ -183,7 +183,6 @@ app.post("/api/init", async (req, res) => {
       () => db.qr_user.findOne({ where: { username } }),
       {}
     );
-   
     let password_hash = user.password_hash;
     password_hash = password_hash.replace(/^\$2y(.+)$/i, "$2a$1");
     if (user) {
@@ -390,8 +389,8 @@ app.post("/api/clotureDatafromto", async (req, res) => {
             quantity: 0,
             totalPrice: 0,
           });
-        item.quantity += 1;
-        item.totalPrice += o.price;
+        item.quantity ++;
+        item.totalPrice =+ o.price;
         return r.set(key, item);
       }, new Map())
       .values(),
@@ -820,7 +819,7 @@ app.post(`/api/products`, async (req, res) => {
       active: e.active,
       is_hot: 1,
       is_cold: 0,
-      is_conserved:0,
+      is_conserved:e.is_conserved,
       code:e.code,
       
       
@@ -1594,6 +1593,7 @@ app.post("/api/cancelorder",async(req,res)=>{
     return db.qr_orders.update(
       {
         status:"rejected"
+
       },
       { where: { id: order.order_id } }
     );

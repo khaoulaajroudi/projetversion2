@@ -61,6 +61,7 @@ import $ from "jquery";
 import Swal from "sweetalert2";
 import { Typeahead } from "react-bootstrap-typeahead";
 import { setPing } from "../Slices/data";
+import { SortGridMenuItems } from "@mui/x-data-grid";
 
 
 const Checkout = () => {
@@ -99,14 +100,15 @@ const Checkout = () => {
   const { table_id } = params;
 
   const user = localStorage.getItem("username");
-  console.log(params);
   const ordersData = useSelector((state) => state.order.checkoutData);
+
+
   const selectedTable = useSelector((state) => state.order.selectedTable);
   const client = useSelector((state) => state.order.client);
   const ping = useSelector((state) => state.data.ping);
   const clients = useSelector((state) => state.data.clients);
-  console.log(ordersData);
   let thisOrder = ordersData.filter((o) => o.order_id == table_id)[0] || {};
+  console.log("thisorder",thisOrder)
   let tvass =[];
   
   console.log(thisOrder);
@@ -125,7 +127,6 @@ const Checkout = () => {
   var curr_year = orderDate?.getFullYear();
   var curr_hour = orderDate?.getHours();
   var curr_min = orderDate?.getMinutes();
-  
   
   const [show, setShow] = useState(false);
   const [showtwo, setshowtwo] = useState(false)
@@ -210,7 +211,6 @@ const Checkout = () => {
           socket.emit(`accept${user_id}`, {
             order: {
               ...thisOrder
-
             },
           });
 
@@ -355,85 +355,115 @@ handlefinal(res.data.id);
   };
   
   let tvas = 0;
-  let is_alcool = false;
-  let test = thisOrder.orderItems;
-  thisOrder?.orderItems?.forEach((element) => {
-    if (element.tva == 20) {
-      is_alcool = true;
-    }
-  });
-  if (is_alcool == true) {
-    tvas = 20;
-  } else {
-    switch (
-      thisOrder.orderType == undefined
-        ? thisOrder.order_type
-        : thisOrder.orderType
-    ) {
-      case "sur place":
-        tvas = 10;
-        break;
-      case "sur place":
-        tvas = 10;
-        break;
-      case "emporter":
-        tvas = 5.5;
-        break;
-      case "livraison":
-        tvas = 5.5;
-        break;
-      default:
-        tvas = 10;
-        break;
-    }
-  }
-  let v3,v1,v2,vs1,vs2,vs3,ht1,ht2,ht3;
+  // let is_alcool = false;
+  // let test = thisOrder.orderItems;
+  // thisOrder?.orderItems?.forEach((element) => {
+  //   if (element.tva == 20) {
+  //     is_alcool = true;
+  //   }
+  // });
+  // if (is_alcool == true) {
+  //   tvas = 20;
+  // } else {
+  //   switch (
+  //     thisOrder.orderType == undefined
+  //       ? thisOrder.order_type
+  //       : thisOrder.orderType
+  //   ) {
+  //     case "sur place":
+  //       tvas = 10;
+  //       break;
+  //     case "sur place":
+  //       tvas = 10;
+  //       break;
+  //     case "emporter":
+  //       tvas = 5.5;
+  //       break;
+  //     case "livraison":
+  //       tvas = 5.5;
+  //       break;
+  //     default:
+  //       tvas = 10;
+  //       break;
+  //   }
+  // }
+  let v3,v1,v2,vs1,vs2,vs3,ht1,ht2,ht3,totalht3,qqt3,vp3,totalprice3,totalht1,qqt1,vp1,totalprice1,totalht2,qqt2,vp2,totalprice2;
   v2=0;
   v1=0;
   v3=0;
   vs1=0;
   vs2=0;
   vs3=0;
+  totalht3=0;
+  totalprice3=0;
+  qqt3=0;
+  vp3=0;
+
+  totalht1=0;
+  totalprice1=0;
+  qqt1=0;
+  vp1=0;
+
+  totalht2=0;
+  totalprice2=0;
+  qqt2=0;
+  vp2=0;
   thisOrder?.orderItems?.map((item) => {
     if (item.is_alcool) {
-      v3=v3+1;
-      vs3=+item.price;
+      v3=v3+(item.qt);
+      qqt3=(item.qt)
+      vp3=(item.price);
+      vs3=+(qqt3*(item.price));
+      totalprice3=totalprice3+vs3;
+      ht3=qqt3*(vp3/(1+(20/100)));
+      totalht3=ht3+totalht3;
+      console.log("totalprice3",totalprice3)
      }
      else if(item.is_conserved){
-       v1=v1+1;
-       vs1=+item.price;
+      v1=v1+(item.qt);
+      qqt1=(item.qt)
+      vp1=(item.price);
+      vs1=+(qqt1*(item.price));
+      totalprice1=totalprice1+vs1;
+      ht1=qqt1*(vp1/(1+(5.5/100)));
+      totalht1=ht1+totalht1;
+      console.log("totalprice1",totalprice1)
      }
  
-       else {
-         v2=v2+1;
-         vs2=+item.price;
+       else if ((item.is_alcool==false) && (item.is_conserved==false)){
+        v2=v2+(item.qt);
+        qqt2=(item.qt)
+        vp2=(item.price);
+        vs2=+(qqt2*(item.price));
+        totalprice2=totalprice2+vs2;
+        ht2=qqt2*(vp2/(1+(10/100)));
+        totalht2=ht2+totalht2;
+        console.log("totalprice2",totalprice2)
        }
- 
-       ht1=vs1/(1+(5.5/100));
-       ht2=vs2/(1+(10/100));
-       ht3=vs3/(1+(20/100));
+       
       var tva5= {
-        "name": "TVA 5.5",
+        "name": "5.5 %",
         "count":v1,
-        "totaltcc":vs1,
-        "amount":ht1.toFixed(2)
+        "totaltcc":totalprice1,
+        "amount":totalht1.toFixed(2)
       };
       var tva10= {
-        "name": "10%",
+        "name": "10 %",
         "count":v2,
-        "totaltcc":vs2,
-        "amount":ht2.toFixed(2)
+        "totaltcc":totalprice2,
+        "amount":totalht2.toFixed(2)
       };
       var tva20= {
-        "name": "20%",
+        "name": "20 %",
         "count":v3,
-        "totaltcc":vs3,
-        "amount":ht3.toFixed(2)
+        "totaltcc":totalprice3,
+        "amount":totalht3.toFixed(2)
       };
+   
       tvass[0] = tva5;
       tvass[1] = tva10;
       tvass[2] = tva20;
-console.log("tva log"+JSON.stringify(tvass));
+      console.log("tvass2",tvass[2])
    });
  
   const handleVerifyCoupon = () => {
@@ -662,33 +692,19 @@ else if(reso.isConfirmed)
   };
 
   const handleExit = () => {
+    let is=false
 
     let tva = 0;
     let is_alcool = false;
     let test = thisOrder.orderItems;
     thisOrder.orderItems.forEach((element) => {
       if (element.tva == 20) {
-        is_alcool = true;
+        is = true;
       }
     });
-    if (is_alcool == true) {
-      tva = 20;
-    } else {
-      switch (thisOrder.orderType) {
-        case "sur place":
-          tva = 10;
-          break;
-        case "emporter":
-          tva = 5.5;
-          break;
-        case "livraison":
-          tva = 5.5;
-          break;
-        default:
-          tva = 10;
-          break;
-      }
-    }
+    // if (is_alcool == true) {
+    //   tva = 20;
+    // } 
     axios
       .post(
         "http://192.168.1.166:5000/api/printFinalOrder",
@@ -696,7 +712,6 @@ else if(reso.isConfirmed)
           user_id: user_id,
           order: {
             ...thisOrder,
-            tvas: tva,
             nbrCouverts: nbrCouverts,
             table_number: thisOrder.table || "",
             order_id: thisOrder.order_id,
@@ -726,7 +741,7 @@ else if(reso.isConfirmed)
             user_id: user_id,
             order: {
               ...thisOrder,
-              tvas: tva,
+              tvas: tvass,
               nbrCouverts: nbrCouverts,
               table_number: thisOrder.table || "",
               order_id: thisOrder.order_id,
@@ -734,7 +749,6 @@ else if(reso.isConfirmed)
               amount:
                 amount >=
                 thisOrder?.totalPrice 
-                 
                   ? (
                       thisOrder?.totalPrice 
                       
@@ -1057,27 +1071,27 @@ else if(reso.isConfirmed)
                       </td>
                       <td>{item.qt}</td>
                       <td style={{ display: "flex" }}>
-                        {item.price?.toFixed(2)}{" "}
+                        {(item.qt*item.price)?.toFixed(2)}{" "}
                         {renderHTML(`<i>${currency}</i>`)}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </Table>
-              <Col xs={3}>
+              <Col>
                 <Table>
                   <tbody
                     className="checkout-tbd"
-                    style={{ width: "50%", height: "auto", align: "right" }}
+                    style={{ width: "100%", height: "auto", align: "right" }}
                   >
                     <tr>
                       <td>
-                        <h6
+                        {/* <h6
                           className="checkout-tbd"
                           style={{ display: "flex", fontWeight: "bold" }}
                         >
                           Total HT :
-                        </h6>
+                        </h6> */}
                       </td>
                       <td>
                         <span
@@ -1087,23 +1101,22 @@ else if(reso.isConfirmed)
 
 
  
- <table style={{backgoundColor:'green' }}>
+ <table style={{width:"300px" , display:"flex",justifyContent:"space-between",flexDirection:"column",marginLeft:"-490px",marginBottom:"-50px"}}>
 
-<tr >
-  <td style={{color:'orange' , paddingRight:"1rem" ,paddingLeft:"1rem"}}> TVA</td>
-  <td className="header">Nbre</td>
-  <td  className="header">HT</td>
-
+<tr className="tbdtva">
+  <th style={{width:"100px"}}>TVA</th>
+  <th style={{width:"100px"}}>Nbre</th>
+  <th style={{width:"100px"}}>HT</th>
 </tr>
 {tvass.map((item, key) => (
   <tr>
-    <td>{item.name}</td>
-    <td>{item.count}</td>
-    <td>{item.amount}</td>
+    <td style={{width:"100px"}}>{item.name}</td>
+    <td style={{width:"100px"}}>{item.count}</td>
+    <td style={{width:"100px"}}>{item.amount}</td>
 
   </tr>
  )
- )};
+ )}
  </table>
 
   
@@ -1119,11 +1132,11 @@ else if(reso.isConfirmed)
                           className="checkout-tbd"
                           style={{ display: "flex", fontWeight: "bold" }}
                         >
-                          TVA( {tvas}%)
+                      
                         </h6>
                       </td>
                       <td>
-                        <span
+                        {/* <span
                           style={{
                             color: "#ff6b6b",
                             display: "flex",
@@ -1133,14 +1146,14 @@ else if(reso.isConfirmed)
                         >
                           {(thisOrder?.totalPrice/(1+(thisOrder?.tvas[0].perc/100))*thisOrder?.tvas[0].perc/100).toFixed(2)}
                           {renderHTML(`<i>${currency}</i>`)}
-                        </span>
+                        </span> */}
                       </td>
                     </tr>
                     <tr>
                       <td>
                         <h6
                           className="checkout-tbd"
-                          style={{ display: "flex", fontWeight: "bold" }}
+                          style={{ display: "flex", justifyContent:"flexStart", fontWeight: "bold", marginTop:"0px", marginBottom:"50px",fontSize:"1.1rem"}}
                         >
                           TOTAL TTC :{" "}
                         </h6>
@@ -1152,6 +1165,8 @@ else if(reso.isConfirmed)
                             display: "flex",
                             marginLeft: "0.5rem",
                             fontWeight: "bold",
+                            marginTop:"0px", 
+                            marginBottom:"50px"
                           }}
                         >
                           {" "}
@@ -1166,7 +1181,7 @@ else if(reso.isConfirmed)
                 </Table>
               </Col>
 
-              <div className="regler-addition-btns">
+              <div className="regler-addition-btns" style={{marginTop:"550px !important"}}>
                 <Button
                   variant="outline-info"
                   onClick={handleShow}

@@ -49,15 +49,16 @@ const CartMenu = ({ selectedTable, setconfirmed, confirmed }) => {
   const remarque = useSelector((state) => state.order.remarque);
   const params = useParams();
   const { order_id } = params;
-  const checkOutData = useSelector((state) => state.order.checkoutData || []);
-  const [late_order_id, setlate_order_id] = useState(0);
+  
+const checkOutData = useSelector((state) => state.order.checkoutData || []);
+const [late_order_id, setlate_order_id] = useState(0);
 
   const orders = useSelector((state) => state.order.orders || []);
 
   const [newOrders, setnewOrders] = useState([]);
   const [orderTo, setOrderTo] = useState({ order: {}, key: 0 });
   const [ShowModifyModal, setShowModifyModal] = useState(false);
-const [activation, setactivation] = useState(false)
+  const [activation, setactivation] = useState(false)
   const tva_mode = useSelector((state) => state.data.tva_mode);
   const orderType = useSelector((state) => state.order.orderType);
   const [rab_tva, setRab_tva] = useState(0);
@@ -150,10 +151,7 @@ const [activation, setactivation] = useState(false)
     newOrders.map((order) => {
       tot += calcOrder(order).price;
       tva += calcOrder(order).tva;
-      tvas.push({
-        value: calcOrder(order).tva,
-        perc: calcOrder(order).item_tva,
-      });
+      tvas=tvass;
     });
     return { tot, tva, tvas };
   };
@@ -276,6 +274,58 @@ const [activation, setactivation] = useState(false)
     }
     // setconfirmed(true);
   };
+  let tvass=[]
+  let v3,v1,v2,vs1,vs2,vs3,ht1,ht2,ht3;
+  v2=0;
+  v1=0;
+  v3=0;
+  vs1=0;
+  vs2=0;
+  vs3=0;
+  orders?.map((item) => {
+    if (item.is_alcool) {
+      
+      v3=+item.qt+v3;
+      vs3=+item.price;
+      console.log(v3);
+     }
+     else if(item.is_conserved){
+       v1=+item.qt+v1;
+      
+       vs1=+item.price;
+     }
+ 
+       else {
+         v2=+item.qt+v2;
+         vs2=+item.price;
+       }
+ 
+       ht1=v1*(vs1/(1+(5.5/100)));
+       ht2=v2*(vs2/(1+(10/100)));
+       ht3=v3*(vs3/(1+(20/100)));
+      var tva5= {
+        "name": "5.5 %",
+        "count":v1,
+        "totaltcc":vs1,
+        "amount":ht1.toFixed(2)
+      };
+      var tva10= {
+        "name": "10 %",
+        "count":v2,
+        "totaltcc":vs2,
+        "amount":ht2.toFixed(2)
+      };
+      var tva20= {
+        "name": "20 %",
+        "count":v3,
+        "totaltcc":vs3,
+        "amount":ht3.toFixed(2)
+      };
+      tvass[0] = tva5;
+      tvass[1] = tva10;
+      tvass[2] = tva20;
+   });
+ 
 
   const handlePlaceOrder = () => {
     
@@ -305,17 +355,16 @@ const [activation, setactivation] = useState(false)
       paymentType: "Especes",
       totalPrice: calcTotal().tot,
       taxPrice: calcTotal().tva,
-      tvas: calcTotal().tvas,
+      tvas: tvass,
       orderItems: [],
+      
       date: client?.date || date,
       time: client?.time || time,
     };
-  
     newOrders.map((one) => {
       order.orderItems.push({
         ...one,
         price: one.finalPrice || calcOrder(one).dbPrice,
-        tva: calcOrder(one).item_tva,
       });
     });
   
@@ -342,7 +391,6 @@ const [activation, setactivation] = useState(false)
                 order: {
                   new: true,
                   ...order,
-                  tvas: "aspa",
                   table_number: order.table || "",
                   order_id: order_id,
                   Date: new Date(),
@@ -404,7 +452,6 @@ const [activation, setactivation] = useState(false)
                 order: {
                   new: true,
                   ...order,
-                  tvas: "aspa",
                   table_number: order.table || "",
                   order_id: newCommande.order_id,
                   Date: new Date(),
@@ -470,7 +517,7 @@ const [activation, setactivation] = useState(false)
                 order: {
                   new: false,
                   ...order,
-                  tvas: groupBy(calcTotal().tvas, "perc"),
+                  tvas: tvass,
                   table_number: nbr || "",
                   order_id: res.data.id,
                   Date: new Date(),

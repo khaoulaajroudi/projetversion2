@@ -1,4 +1,5 @@
 import axios from "axios";
+import { wrap } from "lodash";
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import QRCode from "react-qr-code";
@@ -10,12 +11,12 @@ const Ticket = ({ order, thisDate, ping }) => {
   const address = localStorage.getItem("address");
   const user_id = localStorage.getItem("user_id");
   
-
+  let tvasst =[];
   const params = useParams();
   const { table_id } = params;
   const telephone = localStorage.getItem("telephone");
   const [toShowOrder, settoShowOrder] = useState(order);
-  console.log(toShowOrder)
+
   const ordersData = useSelector((state) => state.order.checkoutData);
   const currency = localStorage.getItem("currency");
   const [isBusy, setIsBusy] = useState(true);
@@ -100,7 +101,7 @@ const Ticket = ({ order, thisDate, ping }) => {
       tva=5.5;
     }
     else {tva=10}
-
+    console.log(tva)
   // } else {
   //   let is = order.orderType == undefined ? order.order_type : order.orderType;
   //   switch (is) {
@@ -119,7 +120,88 @@ const Ticket = ({ order, thisDate, ping }) => {
   //   }
   // }
   // let tax = (toShowOrder.taxPrice * calcTotal(toShowOrder?.orderItems)) / 100;
+  let v3,v1,v2,vs1,vs2,vs3,ht1,ht2,ht3,totaltva,totalht3,qqt3,vp3,totalprice3,totalht1,qqt1,vp1,totalprice1,totalht2,qqt2,vp2,totalprice2;
+   v2=0;
+   v1=0;
+   v3=0;
+   vs1=0;
+   vs2=0;
+   vs3=0;
+   totalht3=0;
+  totalprice3=0;
+  qqt3=0;
+  vp3=0;
+  totalht1=0;
+  totalprice1=0;
+  qqt1=0;
+  vp1=0;
 
+  totalht2=0;
+  totalprice2=0;
+  qqt2=0;
+  vp2=0;
+  order?.orderItems?.map((item) => {
+    if (item.is_alcool==true) {
+    //  item.tva=20;
+      // v3=v3+item.qt;
+      // vs3=vs3+(item.price);
+      v3=v3+(item.qt);
+      qqt3=(item.qt)
+      vp3=(item.price);
+      vs3=+(qqt3*(item.price));
+      totalprice3=totalprice3+vs3;
+      ht3=qqt3*(vp3/(1+(20/100)));
+      totalht3=ht3+totalht3;
+     }
+     else if(item.is_conserved==true){
+      // item.tva=5.5;
+      v1=v1+(item.qt);
+      qqt1=(item.qt)
+      vp1=(item.price);
+      vs1=+(qqt1*(item.price));
+      totalprice1=totalprice1+vs1;
+      ht1=qqt1*(vp1/(1+(5.5/100)));
+      totalht1=ht1+totalht1;
+      console.log("totalprice1",totalprice1)
+     }
+ 
+       else if ((item.is_alcool==false) && (item.is_conserved==false)  ) {
+       
+        v2=v2+(item.qt);
+        qqt2=(item.qt)
+        vp2=(item.price);
+        vs2=+(qqt2*(item.price));
+        totalprice2=totalprice2+vs2;
+        ht2=qqt2*(vp2/(1+(10/100)));
+        totalht2=ht2+totalht2;
+        console.log("totalprice2",totalprice2)
+       }
+ 
+     
+       totaltva=ht1+ht2+ht3;
+       console.log("ht",ht3);
+      var tva5= {
+        "name": "TVA 5.5",
+        "count":v1,
+        "totaltcc":totalprice1,
+        "amount":totalht1.toFixed(2)
+      };
+      var tva10= {
+        "name": "TVA 10%",
+        "count":v2,
+        "totaltcc":totalprice2,
+        "amount":totalht2.toFixed(2)
+      };
+      var tva20= {
+        "name": "TVA  20%",
+        "count":v3,
+        "totaltcc":totalprice3,
+        "amount":totalht3.toFixed(2)
+      };
+      tvasst[0] = tva5;
+      tvasst[1] = tva10;
+      tvasst[2] = tva20;
+   });
   const renderHTML = (rawHTML: string) =>
     React.createElement("div", {
       dangerouslySetInnerHTML: { __html: rawHTML },
@@ -161,11 +243,11 @@ const Ticket = ({ order, thisDate, ping }) => {
               <>
                 <div className="ticket_item">
                   <p>{key + 1 + "-" + item?.name}</p>
-                  <p>{tva}</p>
+                  {/* <p>TVA : {item?.tva} %</p> */}
                   <div
                     style={{
                       display: "flex",
-                      width: "30%",
+                      width: "50%",
                       justifyContent: "space-evenly",
                     }}
                   >
@@ -243,7 +325,7 @@ const Ticket = ({ order, thisDate, ping }) => {
           <span style={{ marginBottom: "0.5rem" }}>
             -------------------------------------
           </span>
-          <div className="ticket_item ticket_last">
+          {/* <div className="ticket_item ticket_last">
             <p>Total HT : </p>
             <div
               style={{
@@ -256,7 +338,7 @@ const Ticket = ({ order, thisDate, ping }) => {
                 {(toShowOrder?.totalPrice /(1+tva/100)).toFixed(2)} {renderHTML(`<i>${currency}</i>`)}
               </p>
             </div>
-          </div>
+          </div> */}
           {/* {Object.keys(tvass).map((key) => (
             <div className="ticket_item ticket_last">
               <p>TVA({key}%):</p>
@@ -274,27 +356,46 @@ const Ticket = ({ order, thisDate, ping }) => {
               </div>
             </div>
           ))} */}
-          {
+            {
             (
             (
-              <div className="ticket_item ticket_last">
-                <p>
-                  TVA(
-                  {tva}
-                  %):
-                </p>
-                <div
+              <div className="ticket_item ticket_last" style={{width:"200px"}} >
+                
+              {tvasst.map((item) => (
+  <>
+
+<div style={{
+                    display: "flex",
+                    flexDirection:"column",
+                    flexwrap: "wrap",
+                   width:"100px",
+                    marginTop:"30px",
+                  alignItems:"center",
+                  height:"60px"
+                }}
+                    >
+                      
+    <li style={{marginBottom:"-5px"}}>{item.name}</li>
+    <p style={{marginBottom:"-5px"}}>{item.count} </p>
+    <p style={{marginBottom:"-5px"}}>{item.amount}</p>
+    </div>
+  
+    </>
+ )
+ )}
+                
+                {/* <div
                   style={{
                     display: "flex",
                     width: "20%",
                     justifyContent: "space-evenly",
                   }}
-                >
-                  <p>
+                > */}
+                  {/* <p>
                     {((toShowOrder?.totalPrice /(1+tva/100))*tva/100).toFixed(2)}
                     {renderHTML(`<i>${currency}</i>`)}
-                  </p>
-                </div>
+                  </p> */}
+                {/* </div> */}
               </div>
             ))
           }
@@ -315,7 +416,14 @@ const Ticket = ({ order, thisDate, ping }) => {
               </p>
             </div>
           </div> */}
-          <div className="ticket_item ticket_last">
+          
+         <div style={{
+                
+                marginTop:"20px"}}> -------------------------------------</div>
+          <div className="ticket_item ticket_last" style={{
+                
+                marginTop:"20px"}}>
+                 
             <p>Total TTC : </p>
             <div
               style={{
@@ -443,3 +551,4 @@ const Ticket = ({ order, thisDate, ping }) => {
 };
 
 export default Ticket;
+

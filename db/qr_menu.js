@@ -34,6 +34,11 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: true,
         defaultValue: 0,
       },
+      // quantity: {
+      //   type: DataTypes.FLOAT,
+      //   allowNull: true,
+      //   defaultValue: 0,
+      // },
       tva: {
         type: DataTypes.FLOAT,
         allowNull: true,

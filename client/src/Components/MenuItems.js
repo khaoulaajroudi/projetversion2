@@ -5,9 +5,7 @@ import Item from "./Item";
 
 const MenuItems = ({ selectedCategory, setAlert, categories, order_id,setconfirmed,confirmed }) => {
   const products = useSelector((state) => state.data.products);
-  console.log(products)
   let category = categories.filter((cat) => cat.id == selectedCategory)[0];
-
   return (
     <div className="meni-iteams">
       <h5 style={{ width: "100%" }}>

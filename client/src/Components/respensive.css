@@ -10,8 +10,14 @@
 }
    }
 
-     
-   @media screen and (max-width:969px) 
+   @media screen and (max-width:1000px) {
+    .colture-table-icon {
+     margin-right: -350px !important;
+ }
+ }
+
+
+   @media screen and (max-width:970px) 
    {
 .ms-auto{
     margin-left: -10px;
@@ -20,17 +26,129 @@
 .navbar-brand{
     margin-left: -80px;
 }
+.colture-table-icon {
+    margin-left: -50px !important;
+}
    }
-   
+   @media screen and (max-width:968px) 
+   {
+   .cloture-server{
+    margin-left: 50px !important;
+    width: 200px;
+
+   }
+   }
    @media screen and (max-width:954px) {
         .plan-restuarnat
         {
             font-size: 1rem;
         
         }
+        .rec{
+            width: 90px !important;
+            margin-right: 20px !important;
+        }
+        
         
     }
-    @media screen and (max-width:642px) {
+    @media screen and (max-width:828px) {
+        .b_el{
+            height: 35px !important;
+            width: 200px !important;
+            display: flex;
+            justify-content: space-between
+
+        }
+    }
+
+    @media screen and (max-width:800px) {
+        .b_el {
+            height: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+        }
+        .b_el p{
+            font-size: 0.75rem !important;
+         
+            justify-content: space-around;
+            margin-right: 20px !important;
+            margin-left: 10px !important;
+        
+           }
+           .tva p{
+            margin-left: 10px !important;
+            font-size: 0.75rem !important;
+           }
+           .css-f3jnds-MuiDataGrid-columnHeaders {
+            min-height: 56px !important;
+    max-height: 56px !important;
+    line-height: 56px !important;
+        }
+        .css-r11z79-MuiDataGrid-root .MuiDataGrid-columnHeader--sortable {
+            width: 20px !important;
+    min-width: 120px !important;
+    max-width: 20px !important;
+}
+    }
+    @media screen and (max-width:780px) {
+        .b_el {
+            height: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 200px;
+            margin-right: 10px !important;
+        }
+    }
+
+    @media screen and (max-width:786px) {
+        .z-body { 
+           width: 205px !important;
+            padding: 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    }
+    @media screen and (max-width:768px) {
+        .cloture-server { 
+            margin-right: -2rem;
+            width: 300px;
+        }
+        .ticketz {
+         
+            width: 95% !important;
+            height: 500px;
+            overflow: auto;
+            background-color: white;
+            box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+        }
+    }
+    @media screen and (max-width:730px) {
+        .ticketz {
+         
+            width: 100% !important;
+            
+    }
+    .b_el{
+      height: 35px !important;
+        display:flex !important;
+        flex-wrap: wrap !important;
+        width: 200px !important;
+        justify-content: space-between;
+    }
+    .b_el p{
+       font-size: 0.7rem !important;
+    
+       justify-content: space-around;
+       margin-right: 20px !important;
+   
+      }
+ 
+}
+
+
+    @media screen and (max-width:650px) {
         .zone_button
         {
         display: flex;
@@ -45,6 +163,37 @@
             margin-top: -20px;
             margin-left: 220px;
         }
+        .cloture_server{
+            font-size: 20px;
+            font-weight: 100;
+        }
+        .cloture_server_img{
+            width: 20px;
+            height: 20px;
+        }
+    }
+    @media screen and (max-width:610px) {
+        .zcaisse_history{ 
+            margin-left: 10px !important;
+            width: 150px;
+            font-size: 1rem;
+        }
+        .navbar-brand {
+        margin:0 auto
+        }
+        .cloture_server{
+            width: 350px !important;
+            font-size: 2px;
+            margin-left: 10px;
+        }
+    }
+    @media screen and (max-width:575px) {
+        .cloture_server{
+            width: 450px !important;
+            font-size: 2px;
+            margin-left: 0.5rem !important;
+        }   
+
     }
     @media screen and (max-width:550px) {
         .plan-restuarnat{
@@ -76,4 +225,101 @@
             margin-left: 50px;
         }
 
+    }
+    @media screen and (max-width:970px) {
+        .rec{
+            width: 100px;
+            height: 70px;
+          
+
+        }
+        .rec h1 {
+           font-size: 0.5rem !important;
+        }
+        .rec h5 {
+            font-size: 0.5rem !important;
+         }
+
+    }
+    @media screen and (max-width:670px) {
+        .rec{
+            width: 80px;
+            height: 70px;
+        }
+        .rec h1 {
+           font-size: 0.5rem !important;
+        }
+        .rec h5 {
+            font-size: 0.5rem !important;
+         }
+    }
+    @media screen and (max-width:520px) {
+        .rec{
+            width: 70px;
+            height: 70px;
+        }
+        .rec h1 {
+           font-size: 0.5rem !important;
+        }
+        .rec h5 {
+            font-size: 0.5rem !important;
+         }
+    }
+    @media screen and (max-width:470px) {
+        .rec{
+            width: 50px;
+            height: 70px;
+        }
+        .rec h1 {
+           font-size: 0.5rem !important;
+        }
+        .rec h5 {
+            font-size: 0.5rem !important;
+         }
+    }
+   
+    @media screen and (max-width:906px) {
+        .css-f3jnds-MuiDataGrid-columnHeaders {
+            min-height: 56px !important;
+    max-height: 56px !important;
+    line-height: 56px !important;
+        }
+        .css-r11z79-MuiDataGrid-root .MuiDataGrid-columnHeader--sortable {
+            width: 40px !important;
+    min-width: 120px !important;
+    max-width: 30px !important;
+}
+        
+    }
+
+    @media screen and (max-width:876px) {
+        .css-r11z79-MuiDataGrid-root .MuiDataGrid-columnHeader--sortable{
+            width: 135px !important;
+            min-width: 50px !important;
+            max-width: 125px !important;
+        }
+        /* .css-r11z79-MuiDataGrid-root .MuiDataGrid-columnHeaderDraggableContainer{
+            width: 50px !important;
+            min-width: 20px !important;
+            max-width: 150px !important;
+        } */
+        .css-r11z79-MuiDataGrid-root .MuiDataGrid-menuIcon{
+            margin-right: -5px !important;
+        }
+        .css-r11z79-MuiDataGrid-root .MuiDataGrid-menuIcon {
+            width: 20px;
+            visibility: hidden;
+            font-size: 20px;
+            margin-right: -10px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            /* -webkit-align-items: center; */
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            /* align-items: center; */
+            align-items: flex-end;
+            -webkit-align-items:flex-end;
+        }
     }
