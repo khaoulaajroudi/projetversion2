@@ -15,11 +15,15 @@ const Ticket = ({ order, thisDate, ping }) => {
   const { table_id } = params;
   const telephone = localStorage.getItem("telephone");
   const [toShowOrder, settoShowOrder] = useState(order);
-  console.log(toShowOrder)
+  console.log("toShowOrder",toShowOrder)
   const ordersData = useSelector((state) => state.order.checkoutData);
   const currency = localStorage.getItem("currency");
   const [isBusy, setIsBusy] = useState(true);
   const [restaurant, setrestaurant] = useState({});
+  const Historyannuler = useSelector((state) => state.data.orderHistory);
+  const annuleshistory =Historyannuler?.filter((e) => e.status == "rejected")
+console.log("annuleshistory",annuleshistory)
+
   // let toShowOrder = ordersData.filter((o) => o.order_id == table_id)[0] || {};
 
   // useEffect(() => {
@@ -44,9 +48,6 @@ const Ticket = ({ order, thisDate, ping }) => {
   useEffect(() => {
     settoShowOrder(order);
   }, [order]);
-
-
-  
   
   var groupBy = function (xs, key) {
     return xs.reduce(function (rv, x) {
@@ -119,7 +120,15 @@ const Ticket = ({ order, thisDate, ping }) => {
   //     settoShowOrder(copy);
   //   }
   // }, [ping]);
-
+  // const calctotalprice = () => {
+  //   let totalprice=0
+  //   let price=0
+  //   toShowOrder.orderItems.map((item, key) => (
+  //       price=((item.price)),
+  //       totalprice=price+totalprice
+  //   ))
+  //   console.log("totalp",totalprice)
+  //   }
   return (
     <Container fluid>
       <div className="ticket">
@@ -157,9 +166,9 @@ const Ticket = ({ order, thisDate, ping }) => {
                     }}
                   >
                     <p>
-                      {item?.qt == undefined ? item.quantity : item.qt + "x"}
+                     
                     </p>
-                    <p>
+                    <p> {item?.qt == undefined ? item.quantity : item.qt + "x"}
                       {`  ${item?.price.toFixed(2)} `}{" "}
                       {renderHTML(`<i>${currency}</i>`)}
                     </p>
@@ -239,8 +248,10 @@ const Ticket = ({ order, thisDate, ping }) => {
                 justifyContent: "space-evenly",
               }}
             >
+             
               <p>
-                {(toShowOrder?.totalPrice /(1+tva/100)).toFixed(2)} {renderHTML(`<i>${currency}</i>`)}
+        
+                {/* {(toShowOrder?.totalPrice /(1+tva/100)).toFixed(2)} {renderHTML(`<i>${currency}</i>`)} */}
               </p>
             </div>
           </div>
@@ -261,7 +272,7 @@ const Ticket = ({ order, thisDate, ping }) => {
               </div>
             </div>
           ))} */}
-          {
+          {/* {
             (
             (
               <div className="ticket_item ticket_last">
@@ -284,7 +295,7 @@ const Ticket = ({ order, thisDate, ping }) => {
                 </div>
               </div>
             ))
-          }
+          } */}
           {/* <div className="ticket_item ticket_last">
             <p>
               TVA({(toShowOrder?.taxPrice / toShowOrder?.totalPrice) * 100}%):

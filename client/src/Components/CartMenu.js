@@ -54,6 +54,7 @@ const checkOutData = useSelector((state) => state.order.checkoutData || []);
 const [late_order_id, setlate_order_id] = useState(0);
 
   const orders = useSelector((state) => state.order.orders || []);
+  console.log("order carte menu",orders)
 
   const [newOrders, setnewOrders] = useState([]);
   const [orderTo, setOrderTo] = useState({ order: {}, key: 0 });

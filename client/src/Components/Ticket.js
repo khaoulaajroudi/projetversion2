@@ -10,14 +10,12 @@ import aprc from "./../Shared/aprc.png";
 const Ticket = ({ order, thisDate, ping }) => {
   const address = localStorage.getItem("address");
   const user_id = localStorage.getItem("user_id");
-  
   let tvasst =[];
   const params = useParams();
   const { table_id } = params;
   const telephone = localStorage.getItem("telephone");
   const [toShowOrder, settoShowOrder] = useState(order);
-
-  const ordersData = useSelector((state) => state.order.checkoutData);
+  console.log("toShowOrder",toShowOrder)
   const currency = localStorage.getItem("currency");
   const [isBusy, setIsBusy] = useState(true);
   const [restaurant, setrestaurant] = useState({});
@@ -45,10 +43,6 @@ const Ticket = ({ order, thisDate, ping }) => {
   useEffect(() => {
     settoShowOrder(order);
   }, [order]);
-
-
-
-  console.log(order)
   
   var groupBy = function (xs, key) {
     return xs.reduce(function (rv, x) {
@@ -58,8 +52,6 @@ const Ticket = ({ order, thisDate, ping }) => {
   };
 
   let tvass = groupBy(toShowOrder?.tvas || [], "perc");
-
-
   const calcOrder = (order) => {
     let price = order.price;
     let tva = order.tva;

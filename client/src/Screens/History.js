@@ -45,9 +45,10 @@ const History = () => {
   const tables = useSelector((state) => state.data.tables);
   const [showPreview, setShowPreview] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
+  console.log("selectedOrder",selectedOrder)
   const tva_mode = useSelector((state) => state.data.tva_mode);
   const [tichetannu, settichetannu] = useState(0)
-  console.log(tichetannu)
+  console.log("tichetannu",tichetannu)
   const [rab_tva, setRab_tva] = useState(0);
   const [newOrders, setnewOrders] = useState([]);
   const user_id = localStorage.getItem("user_id");
@@ -105,9 +106,33 @@ const History = () => {
       ...item,
       qt: item.quantity,
     }));
+
     setSelectedOrder(toOrder);
     setShowPreview(true);
   };
+
+  const handlePreviewannuler = ({ order }) => {
+    let toOrder = _.clone(order);
+    toOrder = {
+      ...toOrder,
+      // order_id: toOrder.id,
+      // taxPrice: toOrder.tva,
+      // totalPrice: toOrder.price,
+    };
+    toOrder.orderItems = toOrder.orderItems.map((item) => ({
+      ...item,
+      // qt: item.quantity,
+    }));
+
+    setSelectedOrder(toOrder);
+    setShowPreview(true);
+  };
+
+
+
+
+
+  
   var groupBy = function (xs, key) {
     return xs?.reduce(function (rv, x) {
       (rv[x[key]] = rv[x[key]] || []).push(x.value);
@@ -636,7 +661,7 @@ const History = () => {
                   }
                 }
                 return (
-                  <tr onClick={() => {handlePreview({ order }); settichetannu(1)}}>
+                  <tr onClick={() => {handlePreviewannuler({ order }); settichetannu(1)}}>
                 
                     <td>
                       {order.status == "pending" ? (

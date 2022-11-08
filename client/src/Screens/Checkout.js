@@ -108,10 +108,9 @@ const Checkout = () => {
   const ping = useSelector((state) => state.data.ping);
   const clients = useSelector((state) => state.data.clients);
   let thisOrder = ordersData.filter((o) => o.order_id == table_id)[0] || {};
-  console.log("thisorder",thisOrder)
+  console.log("thisOrder",thisOrder)
+
   let tvass =[];
-  
-  console.log(thisOrder);
   if (thisOrder.totalPrice == undefined) {
     thisOrder = {
       ...thisOrder,
@@ -188,6 +187,7 @@ const Checkout = () => {
             faire: "Aucun",
             title: "Annulation",
             content: "Annulation de commande par le serveur",
+            price:thisOrder.totalPrice,
           }
         );
         Swal.fire({
@@ -228,6 +228,7 @@ const Checkout = () => {
             faire: "Impayé",
             title: "Annulation",
             content: "Annulation de commande par le serveur",
+            price:thisOrder.totalPrice,
           }
         );
 
@@ -1101,7 +1102,7 @@ else if(reso.isConfirmed)
 
 
  
- <table style={{width:"300px" , display:"flex",justifyContent:"space-between",flexDirection:"column",marginLeft:"-490px",marginBottom:"-50px"}}>
+ <table style={{width:"300px" , display:"flex",justifyContent:"space-between",flexDirection:"column",marginLeft:"-450px",marginBottom:"-50px"}}>
 
 <tr className="tbdtva">
   <th style={{width:"100px"}}>TVA</th>
@@ -1112,7 +1113,7 @@ else if(reso.isConfirmed)
   <tr>
     <td style={{width:"100px"}}>{item.name}</td>
     <td style={{width:"100px"}}>{item.count}</td>
-    <td style={{width:"100px"}}>{item.amount}</td>
+    <td style={{width:"100px"}}>{item.amount} €</td>
 
   </tr>
  )
@@ -1149,7 +1150,10 @@ else if(reso.isConfirmed)
                         </span> */}
                       </td>
                     </tr>
-                    <tr>
+                  </tbody>
+                </Table>
+                <Table>
+                <tr>
                       <td>
                         <h6
                           className="checkout-tbd"
@@ -1163,7 +1167,7 @@ else if(reso.isConfirmed)
                           style={{
                             color: "#ff6b6b",
                             display: "flex",
-                            marginLeft: "0.5rem",
+                            marginLeft: "-45rem",
                             fontWeight: "bold",
                             marginTop:"0px", 
                             marginBottom:"50px"
@@ -1173,11 +1177,10 @@ else if(reso.isConfirmed)
                           {(
                             thisOrder?.totalPrice                            
                           )?.toFixed(2)}{" "}
-                          {renderHTML(`<i>${currency}</i>`)}
+                          {renderHTML(`<i>${currency}</i>`)}€
                         </span>
                       </td>
                     </tr>
-                  </tbody>
                 </Table>
               </Col>
 

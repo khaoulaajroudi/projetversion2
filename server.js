@@ -1592,14 +1592,11 @@ app.post("/api/cancelorder",async(req,res)=>{
    const orderInDb = await safeDbRequest(() => {
     return db.qr_orders.update(
       {
-        status:"rejected"
-
+        status:"rejected",
+         price:order.price,
       },
       { where: { id: order.order_id } }
     );
-    
-  
-    
   }, {});
   
   if (orderInDb) {

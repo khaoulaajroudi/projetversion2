@@ -79,6 +79,7 @@ const Cloture = () => {
     checkoutData?.filter((e) => e.status == "pending" && e.date == date)
       ?.length || 0;
   const annules =checkoutData?.filter((e) => e.status == "rejected")
+  console.log("annules",annules)
   const orders = useSelector((state) => state.data.orderHistory) || [];
   const completd = orders?.slice()?.sort((a, b) => b.id - a.id).filter((item) => item.paymentsInDb && item.paymentsInDb.length > 0)
   const [finalValue, setFinalValue] = useState(initialValue);

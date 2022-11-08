@@ -59,14 +59,13 @@ const NaviBottom = () => {
   const [selectedZone, setSelectedZone] = useState("");
   const tables = useSelector((state) => state.data.tables);
   const ordersHistory = useSelector((state) => state.data.orderHistory);
+  console.log("ordersHistory",ordersHistory)
   const checkoutData = useSelector((state) => state.order.checkoutData);
   const clients = useSelector((state) => state.data.clients);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let freeTables = tables?.filter((table) => table.libre == true)?.length;
-
   let busyTables = tables?.filter((table) => table.libre == false)?.length;
-
   const [show, setShow] = useState(false);
   const [showNote, setShowNote] = useState(false);
   const [showHistoryButton, setshowHistoryButton] = useState(false);
@@ -85,7 +84,6 @@ const NaviBottom = () => {
 
   let clientsData = clients.map((client) => client.nom_prenom);
   const orders = useSelector((state) => state.data.orderHistory) || [];
-
   var curr = new Date();
   var date = curr.toISOString().substr(0, 10);
   var time = curr.getHours() + ":" + curr.getMinutes();
@@ -116,6 +114,7 @@ const NaviBottom = () => {
       });
   }, []);
   const [orderHistory, setOrderHistory] = useState([]);
+
 
   const [orderLoding, setOrderLoding] = useState(false);
   const [selectedTable, setSelectedTable] = useState({});
@@ -379,6 +378,7 @@ if(client.type!="sur place")
   };
 
   console.log("path", path);
+  
   return (
     <div>
       <Navbar bg="light" variant="light" fixed="bottom" className="nav-buttom">
@@ -416,7 +416,9 @@ if(client.type!="sur place")
                 }}
               >
                 Annulées <Badge bg="warning">{annuler}</Badge>
+             
               </Button>
+              
             </Nav.Link>
             <Nav.Link>
               <Button

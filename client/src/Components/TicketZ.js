@@ -1,13 +1,18 @@
 import React from "react";
 import _ from "lodash";
+import  { useState } from "react";
 
 const TicketZ = ({ data, recap, selectedDate, products, tvas , tvasum}) => {
+  // const [toShowOrder, settoShowOrder] = useState(order);
+  // const currency = localStorage.getItem("currency");
   let ouvDate = recap?.lastOuverture?.date.substr(0, 10);
   let ouvTime = recap?.lastOuverture?.date.substr(11, 5);
   var curr = new Date();
   let nowTime = curr.toISOString().substr(11, 5);
   let ouverture = ouvDate + "  " + ouvTime;
 console.log("recapz",recap)
+const annuleshistory =recap?.today?.logs?.filter((e) => e.title_log == "Annulation")
+console.log("annuleshistory",annuleshistory)
 
   let tvass =[];
   let v3,v1,v2,vs1,vs2,vs3,ht1,ht2,ht3,totalht2,qqt2,vp2,totalprice2,totalht3,qqt3,vp3,totalprice3,totalht1,qqt1,vp1,totalprice1;
@@ -88,7 +93,25 @@ console.log("recapz",recap)
       console.log(tvass)
    });
   // var tvasum = 0;
- 
+ let calcul,va1,vas1;
+ let tanul=[]
+// 
+calcul=0
+va1=0
+vas1=0
+annuleshistory?.map((e)=>{
+  va1=+va1
+  vas1=e.price
+totalprice1=totalprice1+vas1;
+var ta1= {
+  "name": "Les commandes anuulées : ",
+  "count":va1,
+  "totaltcc":totalprice1,
+};
+tanul[0] = ta1;
+})
+
+
   // let tvas = _.groupBy(recap.today?.orderItems, function (b) {
   //   return b.tva_perc;
   // });
@@ -97,6 +120,10 @@ console.log("recapz",recap)
   //   (key) => (tvas[key] = tvas[key].reduce((acc, curr) => acc + curr.tva, 0))
   // );
   // console.log(tvas);
+  // const renderHTML = (rawHTML: string) =>
+  //   React.createElement("div", {
+  //     dangerouslySetInnerHTML: { __html: rawHTML },
+  //   });
   return (
     <div className="ticketz">
       <div className="z-head">
@@ -144,11 +171,103 @@ console.log("recapz",recap)
           {/*  */}
         </h6>
         <h6>
-          <b>Annules :</b>{" "}
-          {recap?.today?.logs?.filter((e) => 
-          e.title_log == "Annulation").length || 0
-          }
+        <b>Annules :</b>{" "}
+        {annuleshistory?.map((e) => e).length}
         </h6>
+        {tanul.map((item) => (
+  <>
+
+<div>
+                      
+    <li>   {item.name} {item.totaltcc} €</li>
+    </div>
+    </>
+        ))}
+      {/* annulation */}
+          {/* {toShowOrder.orderItems &&
+            toShowOrder.orderItems.map((item, key) => (
+              <>
+                <div className="ticket_item">
+                  <p>{key + 1 + "-" + item?.name}</p>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "30%",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <p>
+                      {item?.qt == undefined ? item.quantity : item.qt + "x"}
+                    </p>
+                    <p>
+                      {`  ${item?.price.toFixed(2)} `}{" "}
+                      {renderHTML(`<i>${currency}</i>`)}
+                    </p>
+                  </div>
+                </div>
+                {item?.stepItems && Object.keys(item.stepItems).length ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    className="step_item"
+                  >
+                    {Object.keys(item.stepItems).map((key) =>
+                      item.stepItems[key].map((el) => (
+                        <span style={{ textAlign: "start", color: "grey" }}>
+                          -{el.name}
+                        </span>
+                      ))
+                    )}
+                  </div>
+                ) :item?.steps != []? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    className="step_item"
+                  >
+                    {
+                      item.steps?.map((el) => (
+                        <span style={{ textAlign: "start", color: "grey" }}>
+                          -{el.name}
+                        </span>
+                      ))
+                    }
+                  </div>
+                ): (
+                  ""
+                )}
+                {item?.extras != []
+                  ? item?.extras?.map((extra) =>
+                      extra.default_quantity > 0 ? (
+                        <div className="ticket_extra">
+                          <p>+ {extra.title}</p>
+                          <div
+                            style={{
+                              display: "flex",
+                              width: "30%",
+                              justifyContent: "space-evenly",
+                            }}
+                          >
+                            {" "}
+                            <p>{extra.default_quantity + "x"}</p>
+                            <p>
+                              {`  ${extra.price.toFixed(2)} `}
+                              {renderHTML(`<i>${currency}</i>`)}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )
+                    )
+                  : ""}
+              </>
+            ))} */}
+        
         <p>---------------------------------</p>
         {products?.map((item) => (
           <div className="b_el" style={{marginRight:"20px"}}>
