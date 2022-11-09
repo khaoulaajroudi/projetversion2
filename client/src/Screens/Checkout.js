@@ -89,6 +89,8 @@ const Checkout = () => {
     time: time,
     id:0
   });
+  const [nameclient, setnameclient] = useState("")
+  console.log("nameclient",nameclient)
   const checkOutData = useSelector((state) => state.order.checkoutData || []);
   const [isavoir, setisavoir] = useState(false)
   const [showform, setshowform] = useState(false)
@@ -147,7 +149,11 @@ const Checkout = () => {
   const [coupon, setCoupon] = useState("");
   const [payments, setpayments] = useState([]);
   const user_id = localStorage.getItem("user_id");
-  
+   
+  const name=()=>{
+    clientone.map((e)=>{
+    setnameclient(e.name)
+  })}
 
   const handleAnnuler = () => {
     Swal.fire({
@@ -773,7 +779,7 @@ else if(reso.isConfirmed)
           icon: "success",
           title:
             "<h5 >" +
-            `le paiement effectué avec succès avec montant: <span style='color:red'>${amount}€</span> D'avoir:<span style='color:green'>${(amountPaid- thisOrder?.totalPrice).toFixed(2)}€</span> ` +
+            `le paiement effectué avec succès avec montant: <span style='color:red'>${amount}€</span> D'avoir:${nameclient}<span style='color:green'>${(amountPaid- thisOrder?.totalPrice).toFixed(2)}€</span> ` +
             "</h5>",
           showConfirmButton: false,
           timer: 3000,
@@ -782,6 +788,7 @@ else if(reso.isConfirmed)
         navigate("/main");
         dispatch(deletecheckoutData({ order_id: table_id }));
       }else {
+        
         Swal.fire({
           icon: "success",
           title:
@@ -790,7 +797,8 @@ else if(reso.isConfirmed)
             "</h5>",
           showConfirmButton: false,
           timer: 3000,
-        });
+        
+      })
         setLoad(false)
         navigate("/main");
         dispatch(deletecheckoutData({ order_id: table_id }));
@@ -1177,7 +1185,7 @@ else if(reso.isConfirmed)
                           {(
                             thisOrder?.totalPrice                            
                           )?.toFixed(2)}{" "}
-                          {renderHTML(`<i>${currency}</i>`)}€
+                          {renderHTML(`<i>${currency}</i>`)}
                         </span>
                       </td>
                     </tr>
@@ -1355,8 +1363,10 @@ else if(reso.isConfirmed)
                             value={clientone.name}
                             type="text"
                             placeholder="nom/prenom"
-                            onChange={(e) =>
+                            onChange={(e) =>{
                               setclientone({ ...clientone, name: e.target.value })
+                              setnameclient(e.target.value)
+                            }
                             }
                           />
                         </Col>
@@ -1439,9 +1449,7 @@ else if(reso.isConfirmed)
           annuler
         </Button>
                   </div>
-      
                    </div>
-             
         </div>     
         :""}
          {showtwo?
@@ -1481,9 +1489,10 @@ else if(reso.isConfirmed)
                             value={clientone.name}
                             type="text"
                             placeholder="nom/prenom"
-                            onChange={(e) =>
+                            onChange={(e) =>{
                               setclientone({ ...clientone, name: e.target.value })
-                            }
+                              setnameclient(e.target.value)
+                            }}
                           />
                         </Col>
                       </Row>

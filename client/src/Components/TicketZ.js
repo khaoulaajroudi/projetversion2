@@ -101,15 +101,15 @@ va1=0
 vas1=0
 annuleshistory?.map((e)=>{
   va1=+va1
-  vas1=e.price
-totalprice1=totalprice1+vas1;
+  vas1=(e.price)+vas1
+  console.log("vas1",vas1)
 var ta1= {
-  "name": "Les commandes anuulées : ",
-  "count":va1,
-  "totaltcc":totalprice1,
+  "name": "Les commandes annulées : ",
+  "count":vas1,
 };
 tanul[0] = ta1;
 })
+
 
 
   // let tvas = _.groupBy(recap.today?.orderItems, function (b) {
@@ -179,7 +179,7 @@ tanul[0] = ta1;
 
 <div>
                       
-    <li>   {item.name} {item.totaltcc} €</li>
+    <li>   {item.name} {item.count} €</li>
     </div>
     </>
         ))}

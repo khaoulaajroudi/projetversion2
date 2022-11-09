@@ -72,6 +72,7 @@ const Cloture = () => {
 
   const [selectedDate, setSelectedDate] = useState(date);
   const initialValue = useSelector((state) => state.caisse.initialValue);
+
   const products = useSelector((state) => state.data.products);
   const checkoutData = useSelector((state) => state.order.checkoutData);
   console.log(checkoutData)

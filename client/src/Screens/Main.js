@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import logo from "./../Shared/logo.png";
 import bg from "./../Shared/bg.jpeg";
 import io, { Socket } from "socket.io-client";
+import Swal from "sweetalert2";
 
 import "./Styles.css";
 
@@ -18,9 +19,11 @@ import {
   faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import NaviBottom from "../Components/NaviBottom";
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import {
   addNewcheckoutDataFromDB,
+  clearData,
+  clearOrders,
   deleteClientandTable,
 } from "../Slices/order";
 import {
@@ -32,15 +35,48 @@ import {
 } from "../Slices/data";
 import serveur from "./../Shared/serveur.png";
 import $ from "jquery";
+import swal from 'sweetalert';
+
 
 const socket =io.connect("http://localhost:5002")
 const Main = () => {
   const { t } = useTranslation();
   const currentToken = localStorage.getItem("user");
+  const user = localStorage.getItem("username") || "";
+  const user_id = localStorage.getItem("user_id") || "";
   const username = localStorage.getItem("username") || "";
-  const user_id = localStorage.getItem("user_id");
+  const caisse_id = localStorage.getItem("caisse_id");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [activation, setactivation] = useState(false)
+  const initialValue = useSelector((state) => state.caisse.initialValue);
+  const [finalValue, setFinalValue] = useState(initialValue);
+  const [recap, setrecap] = useState({});
+  console.log("recapmain",recap)
+  var curr = new Date();
+  var date = curr.toISOString().substr(0, 10);
+  var time = curr.getHours() + ":" + curr.getMinutes();
+
+
+  var time1 = time.split(':');
+var hours= 
+  const options = [date, "two", "three"];
+  const defaultOption = options[0];
+  const [selectedDate, setSelectedDate] = useState(date);
+
+  // useEffect(async () => {
+ 
+    
+  //   await axios
+  //     .post(
+  //     "http://192.168.1.166:5000/api/clotureData",
+  //       { user_id, caisse_id, TODAY: selectedDate }
+  //     )
+  //     .then((res) => {
+     
+  //       setrecap(res.data);
+  //     })})
+
 useEffect(() => {
   socket.on("a",(data)=>{
     console.log(data)
@@ -48,9 +84,6 @@ useEffect(() => {
 }, [socket])
 
   useEffect(() => {
-    
-    
-
     axios
       .post(
        
@@ -115,6 +148,12 @@ useEffect(() => {
   }, []);
 
 
+  useEffect(() => {
+    if(time==5){
+      handlecloture();
+      setactivation(true)
+    }
+  })
 
   const handleDisconnect = () => {
     localStorage.removeItem("user");
@@ -122,6 +161,52 @@ useEffect(() => {
     navigate("/");
   };
 
+  // const handleclosealrt =()=>{
+  //   let pay_method = [];
+  //   let orderTypes={
+  //     surPlace:0,
+  //     livraison:0,
+  //     emporter:0,
+  //     borne:0
+  // }
+
+//   const handleFinish = () => {
+//       axios
+//       .post(
+//      "http://192.168.1.166:5000/api/CloseCaisse",
+//         {
+//           user_id: user_id,
+//           user: user,
+//           montant: finalValue,
+//         }
+//       )
+//       .then((res) => { 
+//         localStorage.clear();
+//         dispatch(clearData())
+//         navigate("/init");
+//   }
+// )
+// };
+  const handlecloture = () => {
+    swal({
+      title: "tu dois cloturer la caisse?",
+      text: "pour bien gestionner votre caisse tu dois chaque jour la cloturer !!",
+      icon: "STOOP",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        navigate("/cloture")
+        swal("cloturez votre caisse SVP !", {
+          icon: "danger",
+        })
+      } else {
+        // swal("merci pour votre comprehension!");
+        navigate("/cloture")
+      }
+    });
+  }
   return (
     <div className="main_bg">
       <Navbar variant="warning" className="navbar">
@@ -142,7 +227,7 @@ useEffect(() => {
               <h6
                 className="nav_link-h6"
                 style={{ color: "white", paddingTop: "5px" }}
-                // onClick={() => navigate("/calendar")}
+                
               >
                 <FontAwesomeIcon
                   icon={faCalendarAlt}
@@ -152,6 +237,16 @@ useEffect(() => {
                 Agenda
               </h6>
             </Nav.Link>
+            {/* <Nav.Link
+            onClick={() => 
+              { 
+                if(time!=15){
+                handlecloture();
+                setactivation(true)
+              }
+            }
+            }
+          ></Nav.Link> */}
             <Nav.Link onClick={() => navigate("/cloture")}>
               <h6
                 style={{ color: "white", paddingTop: "5px" }}
@@ -163,6 +258,7 @@ useEffect(() => {
                   className="ico1"
                 />
                 {t("cashier")}
+                
               </h6>
             </Nav.Link>
             <Nav.Link onClick={() => handleDisconnect()}>

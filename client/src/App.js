@@ -30,8 +30,6 @@ const socket = io.connect(process.env.REACT_APP_API_SOCKET);
 function App() {
   let today = new Date()
   var time = today.getHours() + ":" + today.getMinutes() 
-
-
 const MINUTE_MS = 60000;
 
 useEffect(() => {

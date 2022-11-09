@@ -374,8 +374,7 @@ const Ticket = ({ order, thisDate, ping }) => {
   
     </>
  )
- )}
-                
+ )}     
                 {/* <div
                   style={{
                     display: "flex",

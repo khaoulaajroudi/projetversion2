@@ -6,12 +6,9 @@ import image from "./../Shared/bgg.png";
 import cartbg from "./../Shared/cartbg.png";
 import {
   addNewcheckoutData,
-
   clearOrders,
- 
   deleteOrder,
   setCheckoutChange,
- 
   setNewOrder,
   setOrderChange,
 } from "../Slices/order";
@@ -242,6 +239,7 @@ const [late_order_id, setlate_order_id] = useState(0);
   var curr = new Date();
   var date = curr.toISOString().substr(0, 10);
   var time = curr.getHours() + ":" + curr.getMinutes();
+  console.log("time",time)
 
 
   const handleConfirm = () => {
@@ -357,8 +355,7 @@ const [late_order_id, setlate_order_id] = useState(0);
       totalPrice: calcTotal().tot,
       taxPrice: calcTotal().tva,
       tvas: tvass,
-      orderItems: [],
-      
+      orderItems: [],  
       date: client?.date || date,
       time: client?.time || time,
     };
